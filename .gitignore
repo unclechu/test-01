@@ -4,3 +4,6 @@ bower_components
 
 # styles and scripts builds
 static/build*
+
+*.log
+*.swp
