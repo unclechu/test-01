@@ -1,0 +1,6 @@
+# distclean
+node_modules
+bower_components
+front-end-gulp
+
+static/build*
