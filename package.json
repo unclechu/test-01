@@ -37,17 +37,40 @@
       "./front-end-gulp"
     ],
     "styles": {
-      "app": {
+      "main": {
         "type": "stylus",
-        "path": "./front-end-sources/styles",
-        "srcDir": "./front-end-sources/styles",
+        "path": "./front-end-sources/styles/",
+        "srcDir": "./front-end-sources/styles/",
         "mainSrc": "main.styl",
-        "destDir": "static",
+        "destDir": "./static/",
         "buildFile": "build.css",
         "shim": [
           "./stylus-shim/nib",
           "./stylus-shim/bootstrap"
         ]
+      }
+    },
+    "scripts": {
+      "main": {
+        "type": "browserify",
+        "path": "./front-end-sources/scripts/",
+        "srcDir": "./front-end-sources/scripts/",
+        "mainSrc": "main.ls",
+        "destDir": "./static/",
+        "buildFile": "build.js",
+        "transform": [
+          "liveify-stable"
+        ],
+        "extensions": [
+          ".ls"
+        ],
+        "jshintDisabled": true,
+        "shim": {
+          "highcharts": {
+            "path": "./bower_components/highcharts/highcharts.js",
+            "exports": "Highcharts"
+          }
+        }
       }
     }
   }
