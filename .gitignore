@@ -1,6 +1,6 @@
 # distclean
 node_modules
 bower_components
-front-end-gulp
 
+# styles and scripts builds
 static/build*
