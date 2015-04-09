@@ -1,0 +1,14 @@
+DATABASE:
+  HOST: localhost
+  LOGIN: _
+  PASSWORD: _
+  DATABASE_NAME: _
+
+SERVER:
+  PORT: 8021
+  HOST: 127.0.0.1
+
+TEMPLATES_PATH: ./templates
+STATIC_PATH: ./static
+
+LANG: en
