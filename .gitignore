@@ -5,5 +5,8 @@ bower_components
 # styles and scripts builds
 static/build*
 
+config.yaml
+
 *.log
 *.swp
+*.sql
