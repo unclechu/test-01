@@ -21,4 +21,4 @@ module.exports.config =
 	.catch !->
 		logger.error 'config.ls:module.exports.config()',\
 			"Cannot parse YAML config file: '#{config-file-path}'", it
-		throw it
+		throw it # just log and throw to next catch

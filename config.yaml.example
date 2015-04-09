@@ -1,3 +1,5 @@
+DEBUG: false
+
 DATABASE:
   HOST: localhost
   LOGIN: _

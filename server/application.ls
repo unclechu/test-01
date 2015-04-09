@@ -20,6 +20,8 @@ require! {
 co ->*
 	cfg = yield config
 
+	logger.level = \debug if cfg.DEBUG
+
 	app = express!
 		.engine \jade, jade.__express
 		.use express-promise!
@@ -31,5 +33,12 @@ co ->*
 
 	{PORT, HOST} = cfg.SERVER
 
+	logger.debug 'application.ls',\
+		"Trying to start http-server at http://#{HOST}:#{PORT}..."
 	http
 		.create-server app
+
+.catch ->
+	logger.error 'application.ls:catch()',\
+		"Application initialization error", it
+	process.exit 1
