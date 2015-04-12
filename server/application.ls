@@ -15,6 +15,7 @@ require! {
 	\./utils : {logger}
 	http
 	co
+	\./router
 }
 
 co ->*
@@ -22,19 +23,23 @@ co ->*
 
 	logger.level = \debug if cfg.DEBUG
 
+	logger.debug 'application.ls',\
+		"Express.js application instance initialization..."
 	app = express!
 		.engine \jade, jade.__express
 		.use express-promise!
-
-		.use /^\/static\//,\
+		.set \views, path.resolve process.cwd!, cfg.TEMPLATES_PATH
+		.set 'view engine', \jade
+		.use /^\/static/,\
 			express.static path.resolve process.cwd!, cfg.STATIC_PATH
-
-	methods = <[head get post]>
 
 	{PORT, HOST} = cfg.SERVER
 
+	router.init app
+
 	logger.debug 'application.ls',\
 		"Trying to start http-server at http://#{HOST}:#{PORT}..."
+
 	yield new Promise (resolve, reject)!->
 		http
 		.create-server app
@@ -44,6 +49,7 @@ co ->*
 			reject it
 		.listen PORT, HOST, !->
 			resolve!
+
 	logger.info 'application.ls',\
 		"http-server started at http://#{HOST}:#{PORT}"
 
