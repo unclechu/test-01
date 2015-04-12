@@ -24,6 +24,6 @@ module.exports.logger = new Logger do
 module.exports.get-basic-tpl-data = (cfg)-> do
 	lang: \ru
 	static-url: (relative-path)->
-		path.join \/, cfg.STATIC_PATH, relative-path |> (+ "?v=#revision")
+		path.join \/static/, relative-path |> (+ "?v=#revision")
 	inspect: (smth, opts=null)-> inspect smth, opts
 	charset: \utf-8
