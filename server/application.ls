@@ -35,10 +35,19 @@ co ->*
 
 	logger.debug 'application.ls',\
 		"Trying to start http-server at http://#{HOST}:#{PORT}..."
-	http
+	yield new Promise (resolve, reject)!->
+		http
 		.create-server app
+		.on \error, !->
+			logger.error 'application.ls',\
+				"Can't start http-server at http://#{HOST}:#{PORT}", it
+			reject it
+		.listen PORT, HOST, !->
+			resolve!
+	logger.info 'application.ls',\
+		"http-server started at http://#{HOST}:#{PORT}"
 
-.catch ->
+.catch !->
 	logger.error 'application.ls:catch()',\
 		"Application initialization error", it
 	process.exit 1
