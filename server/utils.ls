@@ -27,3 +27,10 @@ module.exports.get-basic-tpl-data = (cfg)-> do
 		path.join \/static/, relative-path |> (+ "?v=#revision")
 	inspect: (smth, opts=null)-> inspect smth, opts
 	charset: \utf-8
+
+module.exports.render-promise = (res, template, {data={}})->
+	new Promise (resolve, reject)!->
+		res.render template, data, (err, html)!->
+			return reject err if err?
+			res.end html
+			resolve!
