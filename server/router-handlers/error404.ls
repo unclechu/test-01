@@ -1,5 +1,5 @@
 /**
- * main route handler
+ * error 404 page route handler
  *
  * @author Viacheslav Lotsmanov
  * @license GNU/AGPLv3
@@ -15,7 +15,8 @@ require! {
 module.exports.get = (app, req, res)-> co ->*
 	cfg = yield config
 	data = {} <<< (get-basic-tpl-data cfg)
-	yield render-promise res, \pages/main, {data}
+	res.status 404
+	yield render-promise res, \pages/error404, {data}
 
 module.exports.head = !->
 	# delegate HEAD to GET

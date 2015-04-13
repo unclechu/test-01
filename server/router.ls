@@ -23,6 +23,7 @@ handlers =
 	# list of route handlers modules
 	<[
 		main
+		error404
 	]>
 
 	# require modules
@@ -35,6 +36,11 @@ handlers =
 		|> obj-to-pairs
 		|> filter (-> it.0 in methods)
 		|> pairs-to-obj
+
+routes = [
+	* /^\/$/, handlers.main
+	* \*, handlers.error404
+]
 
 bind-all-methods = (app, url, handler)!-->
 	logger.debug 'router.ls:bind-all-methods()',\
@@ -67,10 +73,7 @@ module.exports.init = (app)-> co ->*
 		"Router initialization..."
 
 	# routing
-	[
-		* /^\/$/, handlers.main
-	]
-	|> each (!-> bind-all-methods app, it.0, it.1)
+	routes |> each (!-> bind-all-methods app, it.0, it.1)
 
 	logger.debug 'router.ls:module.exports.init()',\
 		"Router is initialized"
