@@ -15,16 +15,23 @@ require! {
 
 methods = <[head get post]> # for handlers methods filtering
 
+# list of route handlers modules names
+handlers-list = <[
+	main
+	error404
+]>
+
+routes = [
+	* /^\/$/, \main
+	* \*, \error404
+]
+
 /**
- * handlers list
+ * handlers modules list
  * a handler item is object -- {method-name: handler-callback}
  */
 handlers =
-	# list of route handlers modules
-	<[
-		main
-		error404
-	]>
+	handlers-list
 
 	# require modules
 	|> map (-> [(it |> camelize), (require "./router-handlers/#it")])
@@ -36,11 +43,6 @@ handlers =
 		|> obj-to-pairs
 		|> filter (-> it.0 in methods)
 		|> pairs-to-obj
-
-routes = [
-	* /^\/$/, handlers.main
-	* \*, handlers.error404
-]
 
 bind-all-methods = (app, url, handler)!-->
 	logger.debug 'router.ls:bind-all-methods()',\
@@ -73,7 +75,9 @@ export init = (app)-> co ->*
 		"Router initialization..."
 
 	# routing
-	routes |> each (!-> bind-all-methods app, it.0, it.1)
+	routes
+	|> map (-> [it.0, handlers[it.1 |> camelize]])
+	|> each (!-> bind-all-methods app, it.0, it.1)
 
 	logger.debug 'router.ls:init()',\
 		"Router is initialized"
