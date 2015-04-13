@@ -68,12 +68,12 @@ bind-all-methods = (app, url, handler)!-->
 			.catch !->
 				res.status 500 .end it.message
 
-module.exports.init = (app)-> co ->*
-	logger.debug 'router.ls:module.exports.init()',\
+export init = (app)-> co ->*
+	logger.debug 'router.ls:init()',\
 		"Router initialization..."
 
 	# routing
 	routes |> each (!-> bind-all-methods app, it.0, it.1)
 
-	logger.debug 'router.ls:module.exports.init()',\
+	logger.debug 'router.ls:init()',\
 		"Router is initialized"

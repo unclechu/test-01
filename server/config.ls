@@ -15,10 +15,10 @@ require! {
 
 config-file-path = path.resolve process.cwd!, \config.yaml
 
-module.exports.config =
+export config =
 	read-file config-file-path, \utf8
 	.then -> yaml.safe-load it
 	.catch !->
-		logger.error 'config.ls:module.exports.config()',\
+		logger.error 'config.ls:config{}',\
 			"Cannot parse YAML config file: '#{config-file-path}'", it
 		throw it # just log and throw to next catch

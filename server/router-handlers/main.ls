@@ -12,11 +12,9 @@ require! {
 	co
 }
 
-module.exports.get = (app, req, res)-> co ->*
+export get = (app, req, res)-> co ->*
 	cfg = yield config
 	data = {} <<< (get-basic-tpl-data cfg)
 	yield render-promise res, \pages/main, {data}
 
-module.exports.head = !->
-	# delegate HEAD to GET
-	module.exports.get ...
+export head = !-> get ... # delegate HEAD to GET

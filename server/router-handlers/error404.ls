@@ -12,12 +12,10 @@ require! {
 	co
 }
 
-module.exports.get = (app, req, res)-> co ->*
+export get = (app, req, res)-> co ->*
 	cfg = yield config
 	data = {} <<< (get-basic-tpl-data cfg)
 	res.status 404
 	yield render-promise res, \pages/error404, {data}
 
-module.exports.head = !->
-	# delegate HEAD to GET
-	module.exports.get ...
+export head = !-> get ... # delegate HEAD to GET

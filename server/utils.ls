@@ -14,21 +14,21 @@ require! {
 
 revision = new Date! .get-time!
 
-module.exports.logger = new Logger do
+export logger = new Logger do
 	transports:
 		new logger-transports.Console do
 			colorize: \all
 			timestamp: on
 		...
 
-module.exports.get-basic-tpl-data = (cfg)-> do
+export get-basic-tpl-data = (cfg)-> do
 	lang: \ru
 	static-url: (relative-path)->
 		path.join \/static/, relative-path |> (+ "?v=#revision")
 	inspect: (smth, opts=null)-> inspect smth, opts
 	charset: \utf-8
 
-module.exports.render-promise = (res, template, {data={}})->
+export render-promise = (res, template, {data={}})->
 	new Promise (resolve, reject)!->
 		res.render template, data, (err, html)!->
 			return reject err if err?
