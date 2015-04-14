@@ -7,13 +7,13 @@
  */
 
 require! {
-	\../helpers/basic-tpl-data : {get-basic-tpl-data}
+	\../helpers/basic-tpl-data : {get-typical-page-data}
 	\../helpers/render-promise : {render-promise}
 	co
 }
 
 export get = (app, req, res)-> co ->*
-	data = yield get-basic-tpl-data
+	data = yield get-typical-page-data app, req
 	res.status 404
 	yield render-promise res, \pages/error404, {data}
 

@@ -13,8 +13,11 @@ html(lang=lang)
 					.navbar-brand= local.pageTitle
 				nav.collapse.navbar-collapse
 					ul.nav.navbar-nav
-						li.active
-							a(href="/") Main page
-						li
-							a(href="/highcharts") Charts
+						each item in menu.main
+							if item.active
+								li.active
+									a(href=item.href)= item.title
+							else
+								li
+									a(href=item.href)= item.title
 		block page-block
