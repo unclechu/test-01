@@ -7,4 +7,14 @@ html(lang=lang)
 		link(href=staticUrl("build.css") rel="stylesheet" type="text/css")
 		script(src=staticUrl("build.js"))
 	body
+		header.navbar.navbar-static-top
+			.container
+				.navbar-header
+					.navbar-brand= local.pageTitle
+				nav.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li.active
+							a(href="/") Main page
+						li
+							a(href="/highcharts") Charts
 		block page-block

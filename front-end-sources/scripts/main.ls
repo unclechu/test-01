@@ -10,4 +10,4 @@ require! {
 	highcharts
 }
 
-console.log \1, highcharts
+#console.log \1, highcharts

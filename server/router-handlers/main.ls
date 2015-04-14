@@ -7,14 +7,13 @@
  */
 
 require! {
-	\../config : {config}
-	\../utils : {get-basic-tpl-data, render-promise}
+	\../helpers/basic-tpl-data : {get-basic-tpl-data}
+	\../helpers/render-promise : {render-promise}
 	co
 }
 
 export get = (app, req, res)-> co ->*
-	cfg = yield config
-	data = {} <<< (get-basic-tpl-data cfg)
+	data = yield get-basic-tpl-data
 	yield render-promise res, \pages/main, {data}
 
 export head = !-> get ... # delegate HEAD to GET

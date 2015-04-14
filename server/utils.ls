@@ -8,11 +8,7 @@
 
 require! {
 	winston: {Logger, transports: logger-transports}
-	util: {inspect}
-	path
 }
-
-revision = new Date! .get-time!
 
 export logger = new Logger do
 	transports:
@@ -20,17 +16,3 @@ export logger = new Logger do
 			colorize: \all
 			timestamp: on
 		...
-
-export get-basic-tpl-data = (cfg)-> do
-	lang: \ru
-	static-url: (relative-path)->
-		path.join \/static/, relative-path |> (+ "?v=#revision")
-	inspect: (smth, opts=null)-> inspect smth, opts
-	charset: \utf-8
-
-export render-promise = (res, template, {data={}})->
-	new Promise (resolve, reject)!->
-		res.render template, data, (err, html)!->
-			return reject err if err?
-			res.end html
-			resolve!
