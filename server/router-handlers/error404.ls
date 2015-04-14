@@ -13,7 +13,7 @@ require! {
 }
 
 export get = (app, req, res)-> co ->*
-	data = yield get-typical-page-data app, req
+	data = {} <<< (yield get-typical-page-data app, req)
 	res.status 404
 	yield render-promise res, \pages/error404, {data}
 

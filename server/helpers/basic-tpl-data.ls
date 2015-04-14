@@ -63,5 +63,5 @@ export get-menus = (req)-> co ->*
 	return {menu: menus}
 
 export get-typical-page-data = (app, req)-> co ->*
-	data = (yield get-basic-tpl-data) <<< (yield get-menus req)
+	data = {} <<< (yield get-basic-tpl-data) <<< (yield get-menus req)
 	return data

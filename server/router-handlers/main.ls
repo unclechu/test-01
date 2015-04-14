@@ -13,7 +13,7 @@ require! {
 }
 
 export get = (app, req, res)-> co ->*
-	data = yield get-typical-page-data app, req
+	data = {} <<< (yield get-typical-page-data app, req)
 	yield render-promise res, \pages/main, {data}
 
 export head = !-> get ... # delegate HEAD to GET
