@@ -14,13 +14,19 @@ html(lang=lang)
 						.navbar-brand= local.pageTitle
 					nav.collapse.navbar-collapse
 						ul.nav.navbar-nav
+							mixin mainMenuItem(item)
+								a(href=item.href)
+									if item.icon
+										span(class="glyphicon glyphicon-" + item.icon)
+										=' '
+									span= item.title
 							each item in menu.main
 								if item.active
 									li.active
-										a(href=item.href)= item.title
+										+mainMenuItem(item)
 								else
 									li
-										a(href=item.href)= item.title
+										+mainMenuItem(item)
 			.head-block
 				.container
 					h1= local.pageTitle

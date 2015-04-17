@@ -2,11 +2,13 @@
   "en": [
     {
       "href": "/",
-      "title": "Main page"
+      "title": "Main page",
+      "icon": "home"
     },
     {
       "href": "/highcharts",
-      "title": "Charts"
+      "title": "Charts",
+      "icon": "stats"
     }
   ]
 }
