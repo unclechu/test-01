@@ -3,21 +3,31 @@ html(lang=lang)
 	head
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		meta(charset=charset)
-		title= headTitle
+		title= local.pageTitle
 		link(href=staticUrl("build.css") rel="stylesheet" type="text/css")
 		script(src=staticUrl("build.js"))
 	body
-		header.navbar.navbar-static-top
+		.top-part
+			header.navbar.navbar-static-top
+				.container
+					.navbar-header
+						.navbar-brand= local.pageTitle
+					nav.collapse.navbar-collapse
+						ul.nav.navbar-nav
+							each item in menu.main
+								if item.active
+									li.active
+										a(href=item.href)= item.title
+								else
+									li
+										a(href=item.href)= item.title
+			.head-block
+				.container
+					h1= local.pageTitle
+			main
+				.container
+					block page-block
+		footer
 			.container
-				.navbar-header
-					.navbar-brand= local.pageTitle
-				nav.collapse.navbar-collapse
-					ul.nav.navbar-nav
-						each item in menu.main
-							if item.active
-								li.active
-									a(href=item.href)= item.title
-							else
-								li
-									a(href=item.href)= item.title
-		block page-block
+				p #{local.author.title}: #{local.author.value}
+				p #{local.license.title}: #{local.license.value}

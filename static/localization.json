@@ -1,5 +1,13 @@
 {
   "en": {
-    "pageTitle": "Highcharts test demo"
+    "pageTitle": "Highcharts test demo",
+    "license": {
+      "title": "License",
+      "value": "GNU/AGPLv3"
+    },
+    "author": {
+      "title": "Author",
+      "value": "Viacheslav Lotsmanov"
+    }
   }
 }

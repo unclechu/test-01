@@ -12,6 +12,34 @@ $icon-font-path = pathjoin($static-path, 'icons-fonts/')
 @require 'bootstrap'
 @require 'nib'
 
+html, body
+	height 100%
+
 .navbar-nav > li.active > a
 	font-weight bold
 	color black
+
+.head-block
+	margin-top (-($navbar-margin-bottom))
+	padding-top $navbar-margin-bottom
+	padding-bottom ($navbar-margin-bottom + 10px)
+	background linear-gradient(to bottom, #333, #444)
+	color white
+
+$footer-pt = $navbar-margin-bottom
+$footer-pb = ($navbar-margin-bottom - ($line-height-computed / 2))
+$footer-h = (60px + $footer-pt + $footer-pb)
+
+footer
+	background linear-gradient(to bottom, #444, #333)
+	color white
+	padding-top $footer-pt
+	padding-bottom $footer-pb
+	box-sizing border-box
+	overflow hidden
+	height ($footer-h)
+	margin-top (-($footer-h))
+
+.top-part
+	min-height 100%
+	padding-bottom $footer-h
