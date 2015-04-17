@@ -18,11 +18,13 @@ methods = <[head get post]> # for handlers methods filtering
 # list of route handlers modules names
 handlers-list = <[
 	main
+	highcharts
 	error404
 ]>
 
 routes = [
 	* /^\/$/, \main
+	* /^\/highcharts$/, \highcharts
 	* \*, \error404
 ]
 
@@ -69,6 +71,9 @@ bind-all-methods = (app, url, handler)!-->
 					throw new Error '500 Internal Server Error'
 			.catch !->
 				res.status 500 .end it.message
+		if url isnt \* # ignore 404 page
+			app.all url, (req, res)!->
+				res.status 405 .end '405 Method Not Allowed'
 
 export init = (app)-> co ->*
 	logger.debug 'router.ls:init()',\
