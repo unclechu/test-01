@@ -72,10 +72,10 @@ bind-all-methods = (app, url, handler)!-->
 				else
 					throw new Error '500 Internal Server Error'
 			.catch !->
-				res.status 500 .end it.message
+				res.status 500 .type \text/plain .end it.message
 		if url isnt \* # ignore 404 page
 			app.all url, (req, res)!->
-				res.status 405 .end '405 Method Not Allowed'
+				res.status 405 .type \text/plain .end '405 Method Not Allowed'
 
 export init = (app)-> co ->*
 	logger.debug 'router.ls:init()',\

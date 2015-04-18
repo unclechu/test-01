@@ -13,5 +13,5 @@ require! {
 
 export post = (app, req, res)-> co ->*
 	cfg = yield config
-	res.status 200 .end do
-		status: \success
+	res.status 200 .json do
+		status: \error
