@@ -6,8 +6,14 @@
  * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
  */
 
+<-! document.add-event-listener \DOMContentLoaded
+
 require! {
-	highcharts
+	\./highcharts
+	\./utils/has-class : {has-class}
 }
 
-#console.log \1, highcharts
+html = document.query-selector-all 'html' .0
+
+switch
+| html `has-class` \highcharts-page => require \./pages/highcharts

@@ -19,12 +19,14 @@ methods = <[head get post]> # for handlers methods filtering
 handlers-list = <[
 	main
 	highcharts
+	get-data
 	error404
 ]>
 
 routes = [
 	* /^\/$/, \main
 	* /^\/highcharts$/, \highcharts
+	* /^\/get-data.json$/, \get-data
 	* \*, \error404
 ]
 

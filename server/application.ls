@@ -16,6 +16,7 @@ require! {
 	http
 	co
 	\./router
+	\body-parser
 }
 
 co ->*
@@ -26,6 +27,8 @@ co ->*
 	logger.debug 'application.ls',\
 		"Express.js application instance initialization..."
 	app = express!
+		.use body-parser.urlencoded extended: yes
+		.use body-parser.json!
 		.engine \jade, jade.__express
 		.use express-promise!
 		.set \views, path.resolve process.cwd!, cfg.TEMPLATES_PATH

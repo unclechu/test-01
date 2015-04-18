@@ -24,8 +24,9 @@ export get-basic-tpl-data = co ->*
 		throw new Error "Localization by LANG '#{cfg.LANG}' not found"
 	data =
 		lang: cfg.LANG
-		static-url: (relative-path)->
-			path.join \/static/, relative-path |> (+ "?v=#revision")
+		static-url: (relative-path='')->
+			path.join \/static/, relative-path
+				|> (+ if !!relative-path then "?v=#revision" else '')
 		inspect: (smth, opts=null)-> inspect smth, opts
 		charset: \utf-8
 		local: localization[cfg.LANG]

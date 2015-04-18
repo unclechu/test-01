@@ -1,5 +1,10 @@
 {
   "en": {
+    "err": {
+      "ajax": {
+        "getHighchartsData": "Cannot get data for highcharts"
+      }
+    },
     "pageTitle": "Highcharts test demo",
     "license": {
       "title": "License",

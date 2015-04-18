@@ -15,7 +15,7 @@ require! {
 
 export get = (app, req, res)-> co ->*
 	cfg = yield config
-	data = {} <<< (yield get-typical-page-data app, req)
+	data = {html-class: \highcharts-page} <<< (yield get-typical-page-data app, req)
 	yield render-promise res, "pages/#{cfg.LANG}/highcharts", {data}
 
 export head = !-> get ... # delegate HEAD to GET
