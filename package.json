@@ -84,6 +84,17 @@
           "xhr-promise": {
             "path": "./node_modules/xhr-promise/",
             "exports": ""
+          },
+          "jquery": {
+            "path": "./bower_components/jquery/dist/jquery.min.js",
+            "exports": ""
+          },
+          "bootstrap-modal": {
+            "path": "./node_modules/bootstrap-styl/js/modal.js",
+            "exports": "",
+            "depends": {
+              "jquery": "jQuery"
+            }
           }
         }
       }

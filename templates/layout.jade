@@ -2,7 +2,7 @@ doctype html
 html(
 	lang = lang
 	class = htmlClass
-	data-localization-path = staticUrl('localization.jsonx')
+	data-localization-path = staticUrl('localization.json')
 )
 	head
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -41,3 +41,4 @@ html(
 			.container
 				p #{local.author.title}: #{local.author.value}
 				p #{local.license.title}: #{local.license.value}
+		include modals

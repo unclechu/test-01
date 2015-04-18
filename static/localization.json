@@ -1,10 +1,12 @@
 {
   "en": {
     "err": {
+      "errorLabel": "Error",
       "ajax": {
         "getHighchartsData": "Cannot get data for highcharts"
       }
     },
+    "close": "Close",
     "pageTitle": "Highcharts test demo",
     "license": {
       "title": "License",
