@@ -17,12 +17,15 @@ require! {
 	co
 	\./router
 	\body-parser
+	\./helpers/mysql-promise : mysql
 }
 
 co ->*
 	cfg = yield config
 
 	logger.level = \debug if cfg.DEBUG
+
+	yield mysql.open!
 
 	logger.debug 'application.ls',\
 		"Express.js application instance initialization..."
@@ -59,4 +62,6 @@ co ->*
 .catch !->
 	logger.error 'application.ls:catch()',\
 		"Application initialization error", it
-	process.exit 1
+	mysql.close!
+	.catch !-> # ignore error
+	.then !-> process.exit 1

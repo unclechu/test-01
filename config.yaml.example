@@ -1,8 +1,10 @@
 DEBUG: false
 
 DATABASE:
+  #PORT: _
+  #SOCKET_PATH: _
   HOST: localhost
-  LOGIN: _
+  USER: _
   PASSWORD: _
   DATABASE_NAME: _
 
