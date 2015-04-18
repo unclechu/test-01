@@ -8,9 +8,7 @@
 
 require! {
 	\xhr-promise
-
-	jquery: $
-	\bootstrap-modal
+	\./utils/modal : {alert}
 }
 
 html = document.query-selector-all 'html' .0
@@ -37,15 +35,15 @@ export localization-promise =
 				"Get get localization by lang: '#{lang}'", {exception: e}
 	.catch (e)!->
 		if e instanceof LocalizationLoadError
-			<-! $ \#alertModal .each
-			$ @ .find \.modal-title .text \Error
-			$ @ .find \.modal-body .html "<p>#{e.message}</p>"\
-				+ (if e.exception? then "<p>#{e.exception.message}</p>" else '')
-			$ @ .modal!
+			alert do
+				title: \Error
+				messages:
+					switch
+					| e.exception? => [e.message, e.exception.message]
+					| _ => [e.message]
 		else
 			e = new LocalizationLoadError null, {exception: e}
-			<-! $ \#alertModal .each
-			$ @ .find \.modal-title .text \Error
-			$ @ .find \.modal-body .html "<p>#{e.message}</p>"
-			$ @ .modal!
+			alert do
+				title: \Error
+				messages: [e.message]
 		throw e

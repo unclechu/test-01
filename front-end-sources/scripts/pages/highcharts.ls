@@ -9,9 +9,7 @@
 require! {
 	\xhr-promise
 	\../localization : {localization-promise : localization}
-
-	jquery: $
-	\bootstrap-modal
+	\../utils/modal : {alert}
 }
 
 data-path = 'get-data.json'
@@ -31,11 +29,10 @@ new xhr-promise!
 	json
 .then (json)->
 	console.log json
+	throw new Error ''
 .catch (e)!->
-	<-! $ \#alertModal .each
-	$ @ .find \.modal-title .text local.err.errorLabel
-	$ @ .find \.modal-body .html "
-		<p>#{local.err.ajax.getHighchartsData}</p>
-		<p>#{e.message}</p>
-	"
-	$ @ .modal!
+	alert do
+		title: local.err.errorLabel
+		messages:
+			local.err.ajax.getHighchartsData
+			e.message
