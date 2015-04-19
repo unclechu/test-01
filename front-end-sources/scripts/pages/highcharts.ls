@@ -20,6 +20,16 @@ new xhr-promise!
 .send do
 	url: data-path
 	method: \POST
+	headers:
+		\Content-Type : \application/json
+	data: JSON.stringify do
+		action: \get-statistics
+		value-step: \day
+		fields:
+			\spam
+			\total
+			\reverts
+			\complaints
 .then (res)->
 	throw new Error "HTTP status isn't 200" if res.status isnt 200
 	json = res.response-text
@@ -29,7 +39,6 @@ new xhr-promise!
 	json
 .then (json)->
 	console.log json
-	throw new Error ''
 .catch (e)!->
 	alert do
 		title: local.err.errorLabel
