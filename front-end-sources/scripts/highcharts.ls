@@ -7,6 +7,6 @@
  */
 
 window.HighchartsAdapter = require \highcharts-adapter
-require \highcharts-lib
+require! \highcharts-lib : Highcharts
 
-module.exports = window.HighchartsAdapter
+module.exports = Highcharts

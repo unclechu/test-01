@@ -15,6 +15,13 @@
     "author": {
       "title": "Author",
       "value": "Viacheslav Lotsmanov"
+    },
+    "chartFieldTitle": {
+      "spam": "Spam",
+      "total": "Total",
+      "reverts": "Reverts",
+      "complaints": "Complaints",
+      "spamXtotal": "Spam percent of Total"
     }
   }
 }
