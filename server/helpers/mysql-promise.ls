@@ -86,7 +86,7 @@ export query = (q)-> new Promise (resolve, reject)!->
 		return
 
 	logger.debug 'mysql-promise.ls:query()',\
-		"MySQL query: '#{q}'..."
+		"MySQL query: '''\n#{q}\n'''..."
 
 	(err, rows, fields) <-! instance.query q
 

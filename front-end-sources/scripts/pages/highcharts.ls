@@ -25,6 +25,7 @@ new xhr-promise!
 	data: JSON.stringify do
 		action: \get-statistics
 		value-step: \day
+		rows-limit: 30
 		fields:
 			\spam
 			\total

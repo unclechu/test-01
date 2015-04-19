@@ -12,7 +12,7 @@ require! {
 	\../utils : {logger}
 	util: {inspect}
 	co
-	\prelude-ls : {filter}
+	\prelude-ls : {filter, map, reverse}
 }
 
 # helper for handle errors
@@ -21,6 +21,7 @@ handle-err = (app, req, res, {
 	logmsg = "Handled request error."
 	error = {} # response 'error' key to extend
 	exception = null
+	addit-log-info = null # must be an array or null
 })!->
 	retval =
 		status: \error
@@ -30,6 +31,7 @@ handle-err = (app, req, res, {
 		\nURL: #{req.original-url};
 		\nStatus: #{status};
 		\nRequest data: '#{inspect req.body, depth: 3}';
+		#{if addit-log-info? then "\n#{addit-log-info.join ';\n'};" else ''}
 		\nResponse: '#{inspect retval, depth: 3}'
 		#{if exception? then "\nException:" else '.'}", exception
 	res.status status .json retval
@@ -43,6 +45,19 @@ export get-statistics = (app, req, res)-> co ->*
 		\total
 		\reverts
 		\complaints
+	max-limit = 30
+
+	limit = req.body.rows-limit
+	limit = max-limit unless limit?
+	limit = parse-int limit, 10
+	if "#limit" isnt "#{req.body.rows-limit}" or limit <= 0
+		return handle-err app, req, res, error:
+			code: \get-statistics-incorrect-rows-limit
+			message: "Incorrect rows limit value type (must be an unsigned integer)"
+	if limit > max-limit
+		return handle-err app, req, res, error:
+			code: \get-statistics-rows-limit-over-max
+			message: "Rows limit maximum is #{max-limit}"
 
 	# value step validation
 	unless req.body.value-step in value-step-white-list
@@ -67,11 +82,41 @@ export get-statistics = (app, req, res)-> co ->*
 			message: "Unavailable fields"
 			fields: out-of-list-fields
 
-	# TODO :: request to database
+	# if fields list is empty then select all available fields
+	fields = [] ++ fields-white-list if fields.length <= 0
+
+	# wrap fields to AVG() func
+	q-fields = fields |> map (-> "AVG(#{it}) as #{it}")
+
+	# query to database
+	q = """
+		SELECT UNIX_TIMESTAMP(DATE(dt)) as date,#{fields.join \,} FROM statistics
+		GROUP BY #{
+			switch req.body.value-step
+			| \day => 'DATE(dt)'
+			| otherwise => ...
+		}
+		ORDER by dt DESC
+		LIMIT #{limit};
+	"""
+
+	try
+		{rows} = yield mysql.query q
+		rows |>= reverse # restore ASC sort
+	catch
+		return handle-err app, req, res, do
+			status: 500
+			error:
+				code: \get-statistics-db-error
+				message: "Database error"
+			exception: e
+			addit-log-info: ["DB query: '''\n#{q}\n'''"]
+
 	res.status 200 .json do
 		status: \success
-		data: [1 2 3]
+		data: rows
 
+# WARN :: values must return promises
 actions-map =
 	\get-statistics : get-statistics
 
