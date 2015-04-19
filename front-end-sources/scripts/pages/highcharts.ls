@@ -21,9 +21,7 @@ new xhr-promise!
 .send do
 	url: data-path
 	method: \POST
-	headers:
-		\Content-Type : \application/json
-	data: JSON.stringify do
+	data: \json= + encodeURIComponent JSON.stringify do
 		action: \get-statistics
 		value-step: \day
 		rows-limit: 30

@@ -18,6 +18,7 @@ require! {
 	\./router
 	\body-parser
 	\./helpers/mysql-promise : mysql
+	\prelude-ls : {obj-to-pairs}
 }
 
 co ->*
@@ -31,7 +32,16 @@ co ->*
 		"Express.js application instance initialization..."
 	app = express!
 		.use body-parser.urlencoded extended: yes
-		.use body-parser.json!
+		.use (req, res, next)!-> # because stupid chrome can't send pure json
+			if req.body.json? and (req.body |> obj-to-pairs |> (.length)) is 1
+				try
+					json = JSON.parse req.body.json
+					req.body = json
+				catch
+					logger.error 'application.ls:json-param-parser',\
+						"JSON parse error by 'req.body.json': '#{req.body.json}'", e
+					req.body = {}
+			next!
 		.engine \jade, jade.__express
 		.use express-promise!
 		.set \views, path.resolve process.cwd!, cfg.TEMPLATES_PATH
